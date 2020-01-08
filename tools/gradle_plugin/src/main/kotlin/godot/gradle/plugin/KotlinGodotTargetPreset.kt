@@ -36,9 +36,11 @@ class KotlinGodotTargetPreset(
         target.compilations.all { compilation ->
             compilation.apply {
                 dependencies { implementation(LibrariesDependency) }
-                outputKinds = mutableListOf(NativeOutputKind.DYNAMIC)
                 addGeneratorTasks()
             }
+        }
+        target.binaries {
+            sharedLib()
         }
         return target
     }

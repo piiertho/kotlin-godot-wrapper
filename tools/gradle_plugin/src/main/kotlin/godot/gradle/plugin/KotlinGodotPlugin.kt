@@ -33,7 +33,7 @@ class KotlinGodotPlugin @Inject constructor(): Plugin<Project> {
             convention.plugins["configureGodot"] = ConfigureGodotConvention(this, sourceSetsInformation)
 
 
-            HostManager().targets.forEach { _, target ->
+            HostManager().targets.forEach { (_, target) ->
                 val name = "godot" + target.presetName.capitalize()
 
                 KotlinGodotTargetPreset(
