@@ -1,26 +1,29 @@
 buildscript {
-    ext.kotlin_version = '1.3.30'
+    ext.kotlin_version = '1.3.61'
     repositories {
         maven { url '../../../local_repo' }
         mavenLocal()
         jcenter()
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+        maven { url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.godotengine.kotlin:godot-gradle-plugin:1.0.0"
+        classpath "org.godotengine.kotlin:godot-gradle-plugin:1.0.1"
     }
 }
+
+
+plugins {
+    id "org.jetbrains.kotlin.multiplatform" version "1.3.61"
+}
+apply plugin: 'kotlin-godot'
 
 repositories {
     maven { url '../../../local_repo' }
     mavenLocal()
     jcenter()
-    maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+    maven { url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies" }
 }
-
-apply plugin: 'kotlin-multiplatform'
-apply plugin: 'kotlin-godot'
 
 
 kotlin {
@@ -47,9 +50,10 @@ kotlin {
         fromPreset(presets.godotMingwX64, 'windows')
         fromPreset(presets.godotLinuxX64, 'linux')
         fromPreset(presets.godotMacosX64, 'macos')
+
         configure([macos, linux, windows]) {
-            compilations.all {
-                buildTypes = [RELEASE]
+            binaries {
+                sharedLib([RELEASE])
             }
             //compilations.main.extraOpts('-Xdisable=devirtualization')
         }
