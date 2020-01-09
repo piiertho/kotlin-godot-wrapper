@@ -7,9 +7,9 @@ reloadable=true
 
 [entry]
 
-Windows.64="res://libmain.dll"
-Windows.32="res://libmain.dll"
-X11.64="res://libmain.so"
+Windows.64="res://libsamples.dll"
+Windows.32="res://libsamples.dll"
+X11.64="res://libsamples.so"
 
 [dependencies]
 
