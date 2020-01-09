@@ -9,7 +9,6 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinTargetPreset
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetPreset
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeOutputKind
 import org.jetbrains.kotlin.konan.target.HostManager
 import org.jetbrains.kotlin.konan.target.KonanTarget
 import java.io.File
@@ -36,7 +35,14 @@ class KotlinGodotTargetPreset(
         target.compilations.all { compilation ->
             compilation.apply {
                 dependencies { implementation(LibrariesDependency) }
-                outputKinds = mutableListOf(NativeOutputKind.DYNAMIC)
+//                outputKinds = mutableListOf(NativeOutputKind.DYNAMIC) // -> replaced by binary block. see -> https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#building-final-native-binaries
+                /*
+                Now one has to define it in the gradle build file like so:
+                binaries {
+                    sharedLib([RELEASE])
+                }
+                //TODO: make autocompletion work in groovy. Maybe check first if it works with kts (build.gradle.kts)
+                 */
                 addGeneratorTasks()
             }
         }
