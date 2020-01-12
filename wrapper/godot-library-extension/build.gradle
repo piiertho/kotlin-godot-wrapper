@@ -1,5 +1,7 @@
-apply plugin: 'kotlin-multiplatform'
-
+plugins {
+    id("kotlin-multiplatform")
+    id("maven-publish")
+}
 
 kotlin {
     sourceSets {
