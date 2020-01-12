@@ -27,12 +27,4 @@ subprojects {
         mavenLocal()
         jcenter()
     }
-
-    publishing {
-        repositories {
-            maven {
-                url = '../../local_repo'
-            }
-        }
-    }
 }

@@ -1,16 +1,18 @@
-apply plugin: 'kotlin-multiplatform'
+plugins {
+    id("kotlin-multiplatform")
+}
 
 
 kotlin {
     sourceSets {
         configure([macosMain, linuxMain, windowsMain]) {
-            kotlin.srcDirs 'src/main/kotlin'
+            kotlin.srcDirs = ["src/main/kotlin"]
         }
     }
     targets {
-        fromPreset(presets.mingwX64, 'windows')
-        fromPreset(presets.linuxX64, 'linux')
-        fromPreset(presets.macosX64, 'macos')
+        fromPreset(presets.mingwX64, "windows")
+        fromPreset(presets.linuxX64, "linux")
+        fromPreset(presets.macosX64, "macos")
         configure([macos, linux, windows]) {
             compilations.main {
                 cinterops {
@@ -25,7 +27,7 @@ kotlin {
     }
 }
 
-ext.setProperty('org.jetbrains.kotlin.native.jvmArgs', '-Xmx7g')
+ext.setProperty("kotlin.native.jvmArgs", "-Xmx7g")
 
 /*
 bintray {
@@ -44,3 +46,6 @@ bintray {
         }
     }
 }*/
+
+
+build.finalizedBy(publishToMavenLocal)
