@@ -12,16 +12,11 @@ plugins {
     id("java-gradle-plugin")
     id("maven-publish")
     id("org.jetbrains.kotlin.jvm")
+    id("com.jfrog.bintray")
 }
 
-apply plugin: 'com.jfrog.bintray'
-
-
-ext.group = "org.godotengine.kotlin"
-ext.version = "1.0.1"
-
-group = ext.group
-version = ext.version
+group = "org.godotengine.kotlin"
+version = "1.0.1"
 
 gradlePlugin {
     plugins {
@@ -34,9 +29,8 @@ gradlePlugin {
 
 //TODO: these are overrides because somehow from somewhere the versions 1.3.30 are used which dont work in gradle 6.0.1 with kotlin 1.3.61. Find out from where those versions come and fix it there and then remove this block. (hint: use gradle :dependencies task)
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation(project(":tools:entry-generator"))
-    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.30"
     implementation("org.jetbrains.kotlin:kotlin-native-utils:1.3.61")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61")
 }
@@ -64,20 +58,9 @@ repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
-    maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+    maven("https://dl.bintray.com/kotlin/kotlin-dev")
 }
 
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-
-build {
-    finalizedBy(publishToMavenLocal)
+tasks.build {
+    finalizedBy(tasks.publishToMavenLocal)
 }
