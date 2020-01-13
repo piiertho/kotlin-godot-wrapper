@@ -78,4 +78,6 @@ compileTestKotlin {
     }
 }
 
-build.finalizedBy(publishToMavenLocal)
+build {
+    finalizedBy(publishToMavenLocal)
+}
