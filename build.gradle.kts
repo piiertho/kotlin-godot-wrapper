@@ -4,13 +4,9 @@ buildscript {
             mavenLocal()
             mavenCentral()
             jcenter()
-            maven("https://oss.sonatype.org/content/repositories/snapshots/")
-            maven("https://dl.bintray.com/kotlin/kotlin-eap")
-            maven("https://maven.google.com")
         }
         dependencies {
             classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61")
-            classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+")
         }
     }
 
@@ -21,8 +17,6 @@ buildscript {
             mavenLocal()
             mavenCentral()
             jcenter()
-            maven("https://oss.sonatype.org/content/repositories/snapshots/")
-            maven("https://oss.sonatype.org/content/repositories/releases/")
         }
     }
 }

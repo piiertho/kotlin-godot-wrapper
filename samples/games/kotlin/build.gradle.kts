@@ -2,14 +2,12 @@ buildscript {
     repositories {
         mavenLocal()
         jcenter()
-        maven("https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
     }
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61")
         classpath("org.godotengine.kotlin:godot-gradle-plugin:1.0.1")
     }
 }
-
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
@@ -20,7 +18,6 @@ apply(plugin = "godot-gradle-plugin")
 repositories {
     mavenLocal()
     jcenter()
-    maven("https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
 }
 
 kotlin {
