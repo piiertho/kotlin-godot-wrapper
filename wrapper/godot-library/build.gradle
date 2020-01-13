@@ -1,3 +1,5 @@
+import kotlin.reflect.jvm.internal.impl.descriptors.annotations.KotlinTarget
+
 plugins {
     id("kotlin-multiplatform")
     id("maven-publish")
@@ -5,30 +7,82 @@ plugins {
 
 
 kotlin {
+//    sourceSets.all {
+//        kotlin.srcDirs = ["src/main/kotlin"]
+//    }
+//    linuxX64 {
+//        compilations.getByName("main").cinterops {
+//            godot {
+//                includeDirs.headerFilterOnly("../lib/godot_headers", "src/main/c_interop")
+//            }
+//        }
+//    }
+//    components.getByName("mainCommon") {
+//        dependencies {
+//            cinterop("godot") {
+//                includeDirs.headerFilterOnly("../lib/godot_headers", "src/main/c_interop")
+//            }
+//        }
+//    }
+//    targetFromPreset(presets.getByName("linuxX64"), "linux") {
+//        compilations["main"].cinterops {
+//            GDNative {
+//                defFile 'src/main/c_interop/godot.def'
+//                includeDirs '../lib/godot_headers', 'src/main/c_interop'
+//            }
+//        }
+//    }
+
     sourceSets {
-        configure([macosMain, linuxMain, windowsMain]) {
+        sourceSets.create("macosMain")
+        sourceSets.create("linuxMain")
+        sourceSets.create("windowsMain")
+        configure([sourceSets["macosMain"], sourceSets["linuxMain"], sourceSets["windowsMain"]]) {
             kotlin.srcDirs = ["src/main/kotlin"]
         }
     }
-    targets {
-        fromPreset(presets.mingwX64, "windows")
-        fromPreset(presets.linuxX64, "linux")
-        fromPreset(presets.macosX64, "macos")
-        configure([macos, linux, windows]) {
-            compilations.main {
-                cinterops {
-                    GDNative {
-                        defFile 'src/main/c_interop/godot.def'
-                        includeDirs '../lib/godot_headers', 'src/main/c_interop'
-                    }
-                }
+
+    targetFromPreset(presets["mingwX64"], "windows").compilations.getByName("main") {
+        cinterops {
+            GDNative {
+                defFile 'src/main/c_interop/godot.def'
+                includeDirs '../lib/godot_headers', 'src/main/c_interop'
             }
-            //compilations.main.extraOpts('-Xdisable=devirtualization')
         }
     }
+    targetFromPreset(presets["linuxX64"], "linux").compilations.getByName("main") {
+        cinterops {
+            GDNative {
+                defFile 'src/main/c_interop/godot.def'
+                includeDirs '../lib/godot_headers', 'src/main/c_interop'
+            }
+        }
+    }
+    targetFromPreset(presets["macosX64"], "macos").compilations.getByName("main") {
+        cinterops {
+            GDNative {
+                defFile 'src/main/c_interop/godot.def' //project.projectDir.resolve("src/nativeInterop/cinterop/$name.def")
+                includeDirs '../lib/godot_headers', 'src/main/c_interop'
+            }
+        }
+    }
+//    targets {
+//        fromPreset(presets.mingwX64, "windows")
+//        fromPreset(presets.linuxX64, "linux")
+//        fromPreset(presets.macosX64, "macos")
+//        configure([macos, linux, windows]) {
+//            compilations.main {
+//                cinterops {
+//                    GDNative {
+//                        defFile 'src/main/c_interop/godot.def'
+//                        includeDirs '../lib/godot_headers', 'src/main/c_interop'
+//                    }
+//                }
+//            }
+//            //compilations.main.extraOpts('-Xdisable=devirtualization')
+//        }
+//    }
 }
-
-ext.setProperty("kotlin.native.jvmArgs", "-Xmx7g")
 
 /*
 bintray {
@@ -49,4 +103,6 @@ bintray {
 }*/
 
 
-build.finalizedBy(publishToMavenLocal)
+build {
+    finalizedBy(tasks.publishToMavenLocal)
+}
