@@ -7,9 +7,9 @@ reloadable=true
 
 [entry]
 
-Windows.64="res://libsamples.dll"
-Windows.32="res://libsamples.dll"
-X11.64="res://libsamples.so"
+Windows.64="res://libkotlin.dll"
+Windows.32="res://libkotlin.dll"
+X11.64="res://libkotlin.so"
 
 [dependencies]
 
