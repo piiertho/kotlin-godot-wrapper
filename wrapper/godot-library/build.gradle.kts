@@ -3,6 +3,9 @@ plugins {
     id("maven-publish")
 }
 
+group = "org.godotengine.kotlin"
+version = "1.0.0"
+
 kotlin {
     sourceSets {
         sourceSets.create("macosMain")

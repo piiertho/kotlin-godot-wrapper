@@ -3,6 +3,9 @@ plugins {
     id("maven-publish")
 }
 
+group = "org.godotengine.kotlin"
+version = "1.0.0"
+
 kotlin {
     sourceSets {
         sourceSets.create("macosMain")
@@ -13,10 +16,13 @@ kotlin {
         }
     }
 
+    val windows = targetFromPreset(presets["mingwX64"], "windows")
+    val linux = targetFromPreset(presets["linuxX64"], "linux")
+    val macos = targetFromPreset(presets["macosX64"], "macos")
     val targets = listOf(
-            targetFromPreset(presets["mingwX64"], "windows"),
-            targetFromPreset(presets["linuxX64"], "linux"),
-            targetFromPreset(presets["macosX64"], "macos")
+            windows,
+            linux,
+            macos
     )
 
     targets.forEach { target ->
@@ -25,6 +31,24 @@ kotlin {
                 implementation(project(":wrapper:godot-library"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.3")
             }
+        }
+    }
+
+    windows.compilations.all {
+        dependencies {
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-windowsx64:1.3.3")
+        }
+    }
+
+    linux.compilations.all {
+        dependencies {
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-linuxx64:1.3.3")
+        }
+    }
+
+    macos.compilations.all {
+        dependencies {
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-macosx64:1.3.3")
         }
     }
 }
