@@ -3,12 +3,11 @@ plugins {
     id("application")
     id("org.jetbrains.kotlin.jvm")
     id("maven-publish")
+    application
 }
-
 
 version = "1.0.0"
 group = "org.godotengine.kotlin"
-
 
 repositories {
     mavenLocal()
@@ -22,30 +21,18 @@ dependencies {
     implementation("com.beust:klaxon:3.0.1")//5.2
 }
 
-
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+application {
+    mainClassName = "MainKt"
 }
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-mainClassName = "MainKt"
-/*
-defaultTasks 'run'
-
-run {
-    args 'godot_classes.json', 'godot_classes.xml', '-o', 'Entry.kt'
-}
-*/
 
 publishing {
     publications {
-        entryGenerator(MavenPublication) {
-            from components.java
+        register("entryGenerator", MavenPublication::class) {
+            from(components["java"])
         }
     }
 }
 
-build {
-    finalizedBy(publishToMavenLocal)
+tasks.build {
+    finalizedBy(tasks.publishToMavenLocal)
 }
