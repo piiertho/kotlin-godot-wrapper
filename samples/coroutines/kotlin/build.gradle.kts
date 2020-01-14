@@ -37,7 +37,7 @@ kotlin {
                 }
 
                 libraryPath("coroutines.gdnlib")
-                generateGDNS("project")
+                generateGDNS("${project.rootDir.absolutePath}/project")
 
                 configs(
                         "src/main/kotlin/godot/samples/coroutines/classes.json"
