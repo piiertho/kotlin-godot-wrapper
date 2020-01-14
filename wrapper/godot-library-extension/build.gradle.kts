@@ -33,24 +33,6 @@ kotlin {
             }
         }
     }
-
-    windows.compilations.all {
-        dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-windowsx64:1.3.3")
-        }
-    }
-
-    linux.compilations.all {
-        dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-linuxx64:1.3.3")
-        }
-    }
-
-    macos.compilations.all {
-        dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-macosx64:1.3.3")
-        }
-    }
 }
 
 tasks.build {
